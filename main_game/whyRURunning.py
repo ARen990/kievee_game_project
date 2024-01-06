@@ -20,6 +20,7 @@ class Stickman(Image):
         anim += Animation(y=self.y, duration=.2)
         anim.start(self)
 
+
 class MyApp(App):
     def build(self):
         layout = Widget()
