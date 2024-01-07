@@ -26,6 +26,11 @@ class MyApp(App):
         layout = Widget()
         self.stickman = Stickman()
         layout.add_widget(self.stickman)
+
+        #add button jump
+        button = Button(text="Jump", size_hint=(100, 40), size=(100, 50), pos=(Window.width / 2 - 50, 20))
+        layout.add_widget(button)
+
         return layout
 
 if __name__ == '__main__':
