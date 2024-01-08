@@ -30,8 +30,13 @@ class MyApp(App):
         #add button jump
         button = Button(text="Jump", size_hint=(100, 40), size=(100, 50), pos=(Window.width / 2 - 50, 20))
         layout.add_widget(button)
+        #Sync jump button and function on_jump_button_press
+        button.bind(on_press=self.on_jump_button_press)
 
         return layout
+    
+    def on_jump_button_press(self, instance):
+        self.stickman.jump()
 
 if __name__ == '__main__':
     MyApp().run()
