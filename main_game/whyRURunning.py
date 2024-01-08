@@ -27,6 +27,14 @@ class MyApp(App):
         self.stickman = Stickman()
         layout.add_widget(self.stickman)
 
+        # Add the ground image
+        self.ground = Image(source='image/orther/ground.png', allow_stretch=True, keep_ratio=False)
+        self.ground.size_hint_x = None
+        self.ground.width = Window.width
+        self.ground.height = 48
+        self.ground.pos_hint = {'center_x': .5, 'y': 50}
+        layout.add_widget(self.ground)
+
         #add button jump
         button = Button(text="Jump", size_hint=(100, 40), size=(100, 50), pos=(Window.width / 2 - 50, 20))
         layout.add_widget(button)
