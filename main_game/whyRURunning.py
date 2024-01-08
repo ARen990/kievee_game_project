@@ -23,6 +23,7 @@ class Stickman(Image):
 
 class MyApp(App):
     def build(self):
+        Window.resizeable = False  # Prevent window resizing
         layout = Widget()
         self.stickman = Stickman()
         layout.add_widget(self.stickman)
