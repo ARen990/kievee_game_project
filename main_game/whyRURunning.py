@@ -15,9 +15,9 @@ class Stickman(Image):
         self.size = (100, 100)
         self.pos_hint = {'center_x': .5, 'center_y': .1}
 
-    def jump(self):
-        self.y = Window.height * 0
-        anim = Animation(y=self.y+100, duration=.3)
+    def jump(self, height):
+        self.y = Window.height * 0 #jump smoot
+        anim = Animation(y=self.y + height, duration=.3)
         anim += Animation(y=self.y, duration=.2)
         anim.start(self)
 
@@ -37,16 +37,24 @@ class MyApp(App):
         self.ground.pos_hint = {'center_x': .5, 'y': 50}
         layout.add_widget(self.ground)
 
-        #add button jump
-        button = Button(text="Jump", size_hint=(100, 40), size=(100, 50), pos=(Window.width / 2 - 50, 20))
-        layout.add_widget(button)
-        #Sync jump button and function on_jump_button_press
-        button.bind(on_press=self.on_jump_button_press)
+        # Add jump buttons
+        jump_button1 = Button(text="Jump", size_hint=(None, None), size=(100, 50), pos=(Window.width / 2 - 50, 20))
+        layout.add_widget(jump_button1)
+        #Sync jump button and function on_jump_button1_press
+        jump_button1.bind(on_press=self.on_jump_button1_press)
+
+        jump_button2 = Button(text="Jump X2", size_hint=(None, None), size=(100, 50), pos=(Window.width / 2 - 50, 80))
+        layout.add_widget(jump_button2)
+        #Sync jump button and function on_jump_button2_press
+        jump_button2.bind(on_press=self.on_jump_button2_press)
 
         return layout
     
-    def on_jump_button_press(self, instance):
-        self.stickman.jump()
+    def on_jump_button1_press(self, instance):
+        self.stickman.jump(100)
+
+    def on_jump_button2_press(self, instance):
+        self.stickman.jump(200)
 
 if __name__ == '__main__':
     MyApp().run()
