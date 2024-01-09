@@ -16,6 +16,7 @@ class Stickman(Image):
         self.pos_hint = {'center_x': .5, 'center_y': .1}
 
     def jump(self):
+        self.y = Window.height * 0
         anim = Animation(y=self.y+100, duration=.3)
         anim += Animation(y=self.y, duration=.2)
         anim.start(self)
