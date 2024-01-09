@@ -38,12 +38,12 @@ class MyApp(App):
         layout.add_widget(self.ground)
 
         # Add jump buttons
-        jump_button1 = Button(text="Jump", size_hint=(None, None), size=(100, 50), pos=(Window.width / 2 - 50, 20))
+        jump_button1 = Button(text="Jump", size_hint=(None, None), size=(100, 50), pos=(Window.width - 100, 30))
         layout.add_widget(jump_button1)
         #Sync jump button and function on_jump_button1_press
         jump_button1.bind(on_press=self.on_jump_button1_press)
 
-        jump_button2 = Button(text="Jump X2", size_hint=(None, None), size=(100, 50), pos=(Window.width / 2 - 50, 80))
+        jump_button2 = Button(text="Jump X2", size_hint=(None, None), size=(100, 50), pos=(Window.width - 100, 85))
         layout.add_widget(jump_button2)
         #Sync jump button and function on_jump_button2_press
         jump_button2.bind(on_press=self.on_jump_button2_press)
@@ -57,4 +57,5 @@ class MyApp(App):
         self.stickman.jump(200)
 
 if __name__ == '__main__':
+    Window.size = (800, 400)
     MyApp().run()
