@@ -37,22 +37,22 @@ class About(Screen):
 
         # add twitter button
         twitter_button = Button(text="Twitter", size_hint=(None, None), size=(100, 50), pos=(Window.width / 2 - 50, 200))
-        twitter_button.bind(on_press=lambda x: self.open_link("https://twitter.com"))
+        twitter_button.bind(on_press=lambda x: self.open_link("https://x.com/Aenijin?s=20"))
         self.add_widget(twitter_button)
 
         # add Instagram button
         instagram_button = Button(text="Instagram", size_hint=(None, None), size=(100, 50), pos=(Window.width / 2 - 50, 150))
-        instagram_button.bind(on_press=lambda x: self.open_link("https://www.instagram.com"))
+        instagram_button.bind(on_press=lambda x: self.open_link("https://www.instagram.com/dragon_sutdy?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="))
         self.add_widget(instagram_button)
 
         # add GitHub button
         github_button = Button(text="GitHub", size_hint=(None, None), size=(100, 50), pos=(Window.width / 2 - 50, 100))
-        github_button.bind(on_press=lambda x: self.open_link("https://github.com"))
+        github_button.bind(on_press=lambda x: self.open_link("https://github.com/ARen990"))
         self.add_widget(github_button)
 
         # add youtube button
         youtube_button = Button(text="YouTube", size_hint=(None, None), size=(100, 50), pos=(Window.width / 2 - 50, 50))
-        youtube_button.bind(on_press=lambda x: self.open_link("https://www.youtube.com"))
+        youtube_button.bind(on_press=lambda x: self.open_link("https://www.youtube.com/channel/UCHbOa_h7HDl3jTByZGTwKVw"))
         self.add_widget(youtube_button)
 
     def open_link(self, url):
