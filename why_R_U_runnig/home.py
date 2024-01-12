@@ -3,6 +3,7 @@ from kivy.app import App
 from kivy.uix.button import Button
 from kivy.core.window import Window
 from kivy.uix.image import Image
+from kivy.uix.label import Label
 import webbrowser
 
 class StartScreen(Screen):
@@ -39,6 +40,11 @@ class About(Screen):
         back_button = Button(text="<<Back", size_hint=(None, None), size=(100, 50), pos=(100, 400))
         back_button.bind(on_press=self.go_back)
         self.add_widget(back_button)
+
+        # add text
+        about_text = Label(
+            text="[color=FF9BD2]Contact channels[/color]",font_size=50,pos=(0, 100),markup=True)
+        self.add_widget(about_text)
 
         # add twitter button
         twitter_button = Button(text="Twitter", size_hint=(None, None), size=(100, 50), pos=(Window.width / 2 - 50, 200))
