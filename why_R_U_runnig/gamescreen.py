@@ -1,4 +1,5 @@
 from kivy.uix.screenmanager import Screen
+from kivy.app import App
 from kivy.uix.widget import Widget
 from kivy.uix.image import Image
 from kivy.uix.button import Button
@@ -41,6 +42,11 @@ class GameScreen(Screen):
         self.ground.pos_hint = {'center_x': .5, 'y': 50}
         layout.add_widget(self.ground)
 
+        # add back button
+        back_button = Button(text="<<Back", size_hint=(None, None), size=(100, 50), pos=(100, 400))
+        back_button.bind(on_press=self.go_back)
+        self.add_widget(back_button)
+
         # Add jump buttons
         jump_button1 = Button(text="Jump", size_hint=(None, None), size=(100, 50), pos=(Window.width - 100, 30))
         layout.add_widget(jump_button1)
@@ -57,3 +63,8 @@ class GameScreen(Screen):
 
     def on_jump_button2_press(self, instance):
         self.stickman.jump(200)
+
+    def go_back(self, instance):
+        app = App.get_running_app()
+        app.root.current = 'start'
+    
