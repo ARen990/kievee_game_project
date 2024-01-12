@@ -14,12 +14,12 @@ class StartScreen(Screen):
         self.add_widget(middle_image)
 
         # add start button
-        start_button = Button(text="Start", size_hint=(None, None), size=(100, 50), pos=(Window.width / 2 - 50, 30))
+        start_button = Button(text="Start", size_hint=(None, None), size=(100, 50), pos=(Window.width / 2 - 50, 85))
         start_button.bind(on_press=self.start_game)
         self.add_widget(start_button)
 
         # add about button
-        about_button = Button(text="About", size_hint=(None, None), size=(100, 50), pos=(Window.width / 2 - 50, 85))
+        about_button = Button(text="About", size_hint=(None, None), size=(100, 50), pos=(Window.width / 2 - 50, 30))
         about_button.bind(on_press=self.switch_to_about)
         self.add_widget(about_button)
 
