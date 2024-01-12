@@ -37,6 +37,7 @@ class About(Screen):
 
         # add back button
         back_button = Button(text="<<Back", size_hint=(None, None), size=(100, 50), pos=(100, 400))
+        back_button.bind(on_press=self.go_back)
         self.add_widget(back_button)
 
         # add twitter button
@@ -61,6 +62,10 @@ class About(Screen):
 
     def open_link(self, url):
         webbrowser.open(url)
+
+    def go_back(self, instance):
+        app = App.get_running_app()
+        app.root.current = 'start'
 
 class MyApp(App):
     def build(self):
