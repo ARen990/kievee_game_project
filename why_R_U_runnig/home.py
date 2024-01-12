@@ -35,6 +35,10 @@ class About(Screen):
     def __init__(self, **kwargs):
         super(About, self).__init__(**kwargs)
 
+        # add back button
+        back_button = Button(text="<<Back", size_hint=(None, None), size=(100, 50), pos=(100, 400))
+        self.add_widget(back_button)
+
         # add twitter button
         twitter_button = Button(text="Twitter", size_hint=(None, None), size=(100, 50), pos=(Window.width / 2 - 50, 200))
         twitter_button.bind(on_press=lambda x: self.open_link("https://x.com/Aenijin?s=20"))
