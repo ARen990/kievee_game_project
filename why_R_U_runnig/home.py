@@ -77,14 +77,3 @@ class About(Screen):
     def go_back(self, instance):
         app = App.get_running_app()
         app.root.current = 'start'
-
-class MyApp(App):
-    def build(self):
-        # Create a ScreenManager
-        sm = ScreenManager()
-        sm.add_widget(StartScreen(name='start'))
-        sm.add_widget(About(name='about'))
-        return sm
-
-if __name__ == '__main__':
-    MyApp().run()

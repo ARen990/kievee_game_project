@@ -5,7 +5,7 @@ from kivy.uix.image import Image
 from kivy.uix.button import Button
 from kivy.core.window import Window
 from kivy.animation import Animation
-from kivy.graphics import Rectangle
+from kivy.graphics import Rectangle, Color
 
 class Ground(Image):
     pass
@@ -16,8 +16,8 @@ class Stickman(Image):
         self.source = 'image/stickman/stickrun1.png'
         self.allow_stretch = True
         self.size_hint = (None, None)
-        self.size = (100, 100)
-        self.pos_hint = {'center_x': .5, 'center_y': .1}
+        self.size = (150, 150)
+        self.pos_hint = {'center_x': 0, 'center_y': 0}
 
     def jump(self, height):
         self.y = Window.height * 0 #jump smoot
@@ -28,6 +28,13 @@ class Stickman(Image):
 class GameScreen(Screen):
     def __init__(self, **kwargs):
         super(GameScreen, self).__init__(**kwargs)
+        
+        # Add a white background
+        with self.canvas.before:
+            Color(1, 1, 1, 1)  # White color (RGBA)
+            self.background_rect = Rectangle(size=(Window.width, Window.height), pos=self.pos)
+
+        
         layout = Widget()
 
         # Add the stickman
