@@ -5,13 +5,13 @@ from home import StartScreen, About
 from gamescreen import GameScreen
 
 class MyApp(App):
+
     def build(self):
         sm = ScreenManager()
         start_screen = StartScreen(name='start')
         about_screen = About(name='about')
         game_screen = GameScreen(name='game')
         
-
         sm.add_widget(start_screen)
         sm.add_widget(game_screen)
         sm.add_widget(about_screen)

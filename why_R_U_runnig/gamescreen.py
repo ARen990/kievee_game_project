@@ -8,7 +8,17 @@ from kivy.animation import Animation
 from kivy.graphics import Rectangle, Color
 
 class Ground(Image):
-    pass
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        # Add the fading ground
+        self.source ='image/orther/ground.png'
+        self.allow_stretch = True 
+        self.keep_ratio = False
+        self.size_hint_x = None
+        self.width = Window.width
+        self.height = 48
+        self.pos_hint = {'center_x': .5, 'y': 50}
 
 class Stickman(Image):
     def __init__(self, **kwargs):
@@ -41,12 +51,7 @@ class GameScreen(Screen):
         self.stickman = Stickman()
         layout.add_widget(self.stickman)
 
-        # Add the fading ground
-        self.ground = Image(source='image/orther/ground.png', allow_stretch=True, keep_ratio=False)
-        self.ground.size_hint_x = None
-        self.ground.width = Window.width
-        self.ground.height = 48
-        self.ground.pos_hint = {'center_x': .5, 'y': 50}
+        self.ground = Ground()
         layout.add_widget(self.ground)
 
         # add back button
