@@ -1,3 +1,4 @@
+import random
 from kivy.uix.screenmanager import Screen
 from kivy.app import App
 from kivy.uix.widget import Widget
@@ -5,6 +6,7 @@ from kivy.uix.image import Image
 from kivy.uix.button import Button
 from kivy.core.window import Window
 from kivy.animation import Animation
+from kivy.clock import Clock
 from kivy.graphics import Rectangle, Color
 
 class Ground(Image):
@@ -18,7 +20,7 @@ class Ground(Image):
         self.size_hint_x = None
         self.width = Window.width
         self.height = 48
-        self.pos_hint = {'center_x': .5, 'y': 50}
+        self.pos = (0, 50)
 
 class Stickman(Image):
     def __init__(self, **kwargs):
@@ -27,13 +29,50 @@ class Stickman(Image):
         self.allow_stretch = True
         self.size_hint = (None, None)
         self.size = (150, 150)
-        self.pos_hint = {'center_x': 0, 'center_y': 0}
+        self.pos = (0, 0)
+
+        self.pressed_keys = set()
+        self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
+        self._keyboard.bind(on_key_down=self._on_key_down)
+        self._keyboard.bind(on_key_up=self._on_key_up)
+
+        Clock.schedule_interval(self.move_step, 1/60.)
+
+    def _keyboard_closed(self):
+        self._keyboard.unbind(on_key_down=self._on_key_down)
+        self._keyboard.unbind(on_key_up=self._on_key_up)
+        self._keyboard = None
+
+    def _on_key_down(self, keyboard, keycode, text, modifiers):
+        self.pressed_keys.add(text)
+
+    def _on_key_up(self, keyboard, keycode):
+        text = keycode[1]
+        if text in self.pressed_keys:
+            self.pressed_keys.remove(text)
 
     def jump(self, height):
         self.y = Window.height * 0 #jump smoot
         anim = Animation(y=self.y + height, duration=.3)
         anim += Animation(y=self.y, duration=.2)
         anim.start(self)
+
+    def move_step(self, dt):
+        cur_x = self.pos[0]
+        cur_y = self.pos[1]
+
+        step = 100 * dt
+
+        if 'w' in self.pressed_keys:
+            cur_y += step
+        if 's' in self.pressed_keys:
+            cur_y -= step
+        if 'a' in self.pressed_keys:
+            cur_x -= step
+        if 'd' in self.pressed_keys:
+            cur_x += step
+
+        self.pos = (cur_x, cur_y)
 
 class GameScreen(Screen):
     def __init__(self, **kwargs):
@@ -79,4 +118,4 @@ class GameScreen(Screen):
     def go_back(self, instance):
         app = App.get_running_app()
         app.root.current = 'start'
-    
+
