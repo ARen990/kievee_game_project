@@ -20,5 +20,5 @@ class MyApp(App):
 
 if __name__ == '__main__':
     from kivy.core.window import Window
-    Window.size = (800, 400)
+    Window.size = (800, 600)
     MyApp().run()
