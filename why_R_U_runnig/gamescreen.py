@@ -9,6 +9,21 @@ from kivy.animation import Animation
 from kivy.clock import Clock
 from kivy.graphics import Rectangle, Color
 
+def collides(rect1,rect2):
+    r1x = rect1[0][0]
+    r1y = rect1[0][1]
+    r2x = rect2[0][0]
+    r2y = rect2[0][1]
+    r1w = rect1[1][0]
+    r1h = rect1[1][1]
+    r2w = rect2[1][0]
+    r2h = rect2[1][1]
+
+    if (r1x < r2x + r2w and r1x + r1w > r2x and r1y < r2y + r2h and r1y + r1h > r2y):
+        return True
+    else:
+        return False
+
 class Ground(Image):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -60,7 +75,7 @@ class Stickman(Image):
     def move_step(self, dt):
         cur_x = self.pos[0]
         cur_y = self.pos[1]
-
+        # add random step
         step = random.uniform(10, 10000) * dt
 
         if 'w' in self.pressed_keys:
@@ -71,7 +86,6 @@ class Stickman(Image):
             cur_x -= step
         if 'd' in self.pressed_keys:
             cur_x += step
-
         self.pos = (cur_x, cur_y)
 
 class Goal(Image):
