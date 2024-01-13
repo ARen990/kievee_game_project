@@ -14,6 +14,11 @@ class StartScreen(Screen):
         middle_image = Image(source='image/stickman/stickrun2.png', size_hint=(None, None), size=(250, 250),pos=(Window.width / 2 - 140, Window.height / 2 - 90))
         self.add_widget(middle_image)
 
+        # add text name game
+        about_text = Label(
+            text="[color=FF9BD2]Why Are U Running[/color]",font_size=50, size_hint=(None, None),pos=(Window.width / 2 - 50, 200),markup=True)
+        self.add_widget(about_text)
+
         # add start button
         start_button = Button(text="Start", size_hint=(None, None), size=(100, 50), pos=(Window.width / 2 - 50, 85))
         start_button.bind(on_press=self.start_game)
