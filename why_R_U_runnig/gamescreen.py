@@ -61,7 +61,7 @@ class Stickman(Image):
         cur_x = self.pos[0]
         cur_y = self.pos[1]
 
-        step = 100 * dt
+        step = random.uniform(10, 10000) * dt
 
         if 'w' in self.pressed_keys:
             cur_y += step
@@ -73,6 +73,14 @@ class Stickman(Image):
             cur_x += step
 
         self.pos = (cur_x, cur_y)
+
+class Goal(Image):
+    def __init__(self, **kwargs):
+        super(Goal, self).__init__(**kwargs)
+        self.source = 'image/floor_ob/dio.png'
+        self.allow_stretch = True
+        self.size_hint = (None, None)
+        self.size = (100, 100)  # Adjust the size as needed
 
 class GameScreen(Screen):
     def __init__(self, **kwargs):
@@ -93,8 +101,13 @@ class GameScreen(Screen):
         self.ground = Ground()
         layout.add_widget(self.ground)
 
+        # Create a random goal
+        self.goal = Goal()
+        self.place_goal_randomly()
+        layout.add_widget(self.goal)
+
         # add back button
-        back_button = Button(text="<<Back", size_hint=(None, None), size=(100, 50), pos=(100, 400))
+        back_button = Button(text="<<Back", size_hint=(None, None), size=(100, 50), pos=(Window.width - 1000, 700))
         back_button.bind(on_press=self.go_back)
         self.add_widget(back_button)
 
@@ -119,3 +132,14 @@ class GameScreen(Screen):
         app = App.get_running_app()
         app.root.current = 'start'
 
+    def place_goal_randomly(self):
+        # Place the goal at a random position within the window
+        goal_width = self.goal.width
+        goal_height = self.goal.height
+        window_width = Window.width
+        window_height = Window.height
+
+        random_x = random.randint(0, window_width - goal_width)
+        random_y = random.randint(0, window_height - goal_height)
+
+        self.goal.pos = (random_x, random_y)
