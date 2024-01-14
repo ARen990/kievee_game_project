@@ -4,6 +4,7 @@ from kivy.uix.button import Button
 from kivy.core.window import Window
 from kivy.uix.image import Image
 from kivy.uix.label import Label
+from kivy.uix.slider import Slider
 from kivy.core.audio import SoundLoader
 import webbrowser
 
@@ -11,20 +12,17 @@ class StartScreen(Screen):
     def __init__(self, **kwargs):
         super(StartScreen, self).__init__(**kwargs)
 
-        # Load background music
-        self.background_music = SoundLoader.load('image/music/chinese_music.mp3')
-        if self.background_music:
-            self.background_music.loop = True
-            self.background_music.play()
+
+        setmusic_button = Button(text="setting", font_size=25, size_hint=(None, None),size=(150, 50), pos=(Window.width / 2 - 500 , 700))
+        setmusic_button.bind(on_press=self.switch_to_sound)
+        self.add_widget(setmusic_button)
 
         # add image
-        middle_image = Image(source='image/stickman/stickrun2.png', size_hint=(None, None), size=(300, 300),
-                             pos=(Window.width / 2 - 140, Window.height / 2))
+        middle_image = Image(source='image/stickman/stickrun2.png', size_hint=(None, None), size=(300, 300),pos=(Window.width / 2 - 140, Window.height / 2))
         self.add_widget(middle_image)
 
         # add Append button
-        append_button = Button(text="Have you encountered a problem?", font_size=25, size_hint=(None, None),
-                               size=(400, 50), pos=(Window.width / 2 + 100, 700), color=(1, 0, 0, 1))
+        append_button = Button(text="Have you encountered a problem?", font_size=25, size_hint=(None, None),size=(400, 50), pos=(Window.width / 2 + 100, 700), color=(1, 0, 0, 1))
         append_button.bind(on_press=self.switch_to_append)
         self.add_widget(append_button)
 
@@ -35,16 +33,24 @@ class StartScreen(Screen):
         self.add_widget(name_text)
 
         # add start button
-        start_button = Button(text="Start", font_size=50, size_hint=(None, None), size=(150, 100),
-                              pos=(Window.width / 2 - 50, 150))
+        start_button = Button(text="Start", font_size=50, size_hint=(None, None), size=(150, 100),pos=(Window.width / 2 - 50, 150))
         start_button.bind(on_press=self.start_game)
         self.add_widget(start_button)
 
         # add about button
-        about_button = Button(text="About", font_size=50, size_hint=(None, None), size=(150, 100),
-                              pos=(Window.width / 2 - 50, 30))
+        about_button = Button(text="About", font_size=50, size_hint=(None, None), size=(150, 100),pos=(Window.width / 2 - 50, 30))
         about_button.bind(on_press=self.switch_to_about)
         self.add_widget(about_button)
+
+    # change volume
+    def on_volume_change(self, instance, value):
+        if self.background_music:
+            self.background_music.volume = value
+
+    def set_volume(self, volume):
+        if self.background_music:
+            self.background_music.volume = volume
+            self.volume_slider.value = volume
 
     def start_game(self, instance):
         app = App.get_running_app()
@@ -57,6 +63,11 @@ class StartScreen(Screen):
     def switch_to_append(self, instance):
         app = app = App.get_running_app()
         app.root.current = 'append'
+
+    def switch_to_sound(self, instance):
+        app = app = App.get_running_app()
+        app.root.current = 'sound'
+
 
 class About(Screen):
     def __init__(self, **kwargs):
@@ -163,17 +174,53 @@ class Append(Screen):
         app.root.current = 'game'
         if self.sound_effect:
             self.sound_effect.play()
+    
+class Sound(Screen):
+    def __init__(self, **kw):
+        super().__init__(**kw)
 
-# Start the music in the App class
-class YourApp(App):
-    def build(self):
-        sm = ScreenManager()
-        sm.add_widget(StartScreen(name='start'))
-        sm.add_widget(About(name='about'))
-        sm.add_widget(Append(name='append'))
-        # Add other screens as needed
-        return sm
+        # Load background music
+        self.background_music = SoundLoader.load('image/music/chinese_music.mp3')
+        if self.background_music:
+            self.background_music.loop = True
+            self.background_music.play()
 
-# Run the app
-if __name__ == '__main__':
-    YourApp().run()
+        # Volume slider
+        self.volume_slider = Slider(min=0, max=1, value=1, step=0.01, size_hint=(None, None), width=300, height=50,
+                                    pos=(Window.width / 2 - 150, 600))
+        self.volume_slider.bind(value=self.on_volume_change)
+        self.add_widget(self.volume_slider)
+
+        # Volume control buttons
+        volume_buttons = [
+            {"text": "10%", "volume": 0.1},
+            {"text": "25%", "volume": 0.25},
+            {"text": "50%", "volume": 0.5},
+            {"text": "75%", "volume": 0.75},
+            {"text": "100%", "volume": 1.0}
+        ]
+
+        for button_info in volume_buttons:
+            volume_button = Button(text=button_info["text"], font_size=20, size_hint=(None, None), size=(100, 50),
+                                   pos=(Window.width / 2 - 50, 500 - volume_buttons.index(button_info) * 70))
+            volume_button.bind(on_press=lambda x, vol=button_info["volume"]: self.set_volume(vol))
+            self.add_widget(volume_button)
+
+        # add back button
+        back_button = Button(text="<<Back", font_size=40, size_hint=(None, None), size=(150, 100),pos=(Window.width - 1000, 650))
+        back_button.bind(on_press=self.go_back)
+        self.add_widget(back_button)
+
+    # Add the missing on_volume_change method
+    def on_volume_change(self, instance, value):
+        if self.background_music:
+            self.background_music.volume = value
+
+    def set_volume(self, volume):
+        if self.background_music:
+            self.background_music.volume = volume
+            self.volume_slider.value = volume
+    
+    def go_back(self, instance):
+        app = App.get_running_app()
+        app.root.current = 'start'
