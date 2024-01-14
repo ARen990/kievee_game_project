@@ -1,6 +1,6 @@
 import random
 import time
-from kivy.uix.screenmanager import Screen
+from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.app import App
 from kivy.uix.popup import Popup
 from kivy.uix.boxlayout import BoxLayout
@@ -13,7 +13,7 @@ from kivy.animation import Animation
 from kivy.clock import Clock
 from kivy.graphics import Rectangle, Color
 
-def collides(rect1,rect2):
+def collides(rect1, rect2):
     r1x = rect1[0][0]
     r1y = rect1[0][1]
     r2x = rect2[0][0]
@@ -71,7 +71,7 @@ class Stickman(Image):
             self.pressed_keys.remove(text)
 
     def jump(self, height):
-        self.y = Window.height * 0 #jump smoot
+        self.y = Window.height * 0 #jump smooth
         anim = Animation(y=self.y + height, duration=.3)
         anim += Animation(y=self.y, duration=.2)
         anim.start(self)
@@ -138,7 +138,6 @@ class GameScreen(Screen):
         layout.add_widget(reset_button)
         reset_button.bind(on_press=self.reset_game)
 
-
         # add back button
         back_button = Button(text="<<Back", size_hint=(None, None), size=(100, 50), pos=(Window.width - 1000, 700))
         back_button.bind(on_press=self.go_back)
@@ -157,7 +156,7 @@ class GameScreen(Screen):
 
         # Initialize the timer
         self.start_time = time.time()
-        self.timer_update(0)
+        self.elapsed_time = 0
 
         # Schedule the timer update method
         Clock.schedule_interval(self.timer_update, 1 / 60.)
@@ -170,6 +169,7 @@ class GameScreen(Screen):
             seconds = int(elapsed_time % 60)
 
             self.timer_label.text = '{:02d}:{:02d}'.format(minutes, seconds)
+            self.elapsed_time = elapsed_time
 
             # Check for collision between stickman and goal
             stickman_rect = [(self.stickman.x, self.stickman.y), (self.stickman.width, self.stickman.height)]
@@ -184,8 +184,10 @@ class GameScreen(Screen):
         Clock.unschedule(self.timer_update)
 
     def show_victory_popup(self):
+        elapsed_time_formatted = self.format_elapsed_time()
+
         popup_content = BoxLayout(orientation='vertical', padding=10)
-        popup_content.add_widget(Label(text='You won!', font_size=20))
+        popup_content.add_widget(Label(text=f'You won in {elapsed_time_formatted}!', font_size=20))
         
         # Add a button to return to the home page
         return_home_button = Button(text='Return to Home Page', size_hint=(None, None), size=(200, 50))
@@ -224,7 +226,6 @@ class GameScreen(Screen):
         self.place_goal_randomly()
 
     def place_goal_randomly(self):
-        # Place the goal at a random position within the window
         goal_width = self.goal.width
         goal_height = self.goal.height
         window_width = Window.width
@@ -234,3 +235,10 @@ class GameScreen(Screen):
         random_y = random.randint(0, window_height - goal_height)
 
         self.goal.pos = (random_x, random_y)
+
+    def format_elapsed_time(self):
+        total_elapsed_time = self.elapsed_time + (time.time() - self.start_time)
+        minutes = int(total_elapsed_time // 60)
+        seconds = int(total_elapsed_time % 60)
+        return '{:02d}:{:02d}'.format(minutes, seconds)
+
