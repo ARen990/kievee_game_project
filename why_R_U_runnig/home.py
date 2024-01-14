@@ -109,6 +109,9 @@ class Append(Screen):
             text="[color=#FFFFFF]I apologize for the inconvenience.[/color]",font_size=30,pos=(Window.width - 800, Window.width / 2 -650),markup=True)
         self.add_widget(add2_text)
 
+        # add image
+        me_image = Image(source='image/stickman/stickdead.png', size_hint=(None, None), size=(300, 300),pos=(Window.width / 2 - 400, Window.height / 2 - 300 ))
+        self.add_widget(me_image)
 
     def go_back(self, instance):
         app = App.get_running_app()
