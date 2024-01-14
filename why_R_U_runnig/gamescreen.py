@@ -1,6 +1,8 @@
 import random
+import time
 from kivy.uix.screenmanager import Screen
 from kivy.app import App
+from kivy.uix.label import Label
 from kivy.uix.widget import Widget
 from kivy.uix.image import Image
 from kivy.uix.button import Button
@@ -105,7 +107,6 @@ class GameScreen(Screen):
             Color(1, 1, 1, 1)  # White color (RGBA)
             self.background_rect = Rectangle(size=(Window.width, Window.height), pos=self.pos)
 
-        
         layout = Widget()
 
         # Add the stickman
@@ -119,6 +120,10 @@ class GameScreen(Screen):
         self.goal = Goal()
         self.place_goal_randomly()
         layout.add_widget(self.goal)
+
+        # Add a timer label
+        self.timer_label = Label(text='0:00', font_size='50sp', color=(0, 0, 0, 1), pos=(Window.width - 200, 600))
+        layout.add_widget(self.timer_label)
 
         # add back button
         back_button = Button(text="<<Back", size_hint=(None, None), size=(100, 50), pos=(Window.width - 1000, 700))
@@ -135,6 +140,22 @@ class GameScreen(Screen):
         jump_button2.bind(on_press=self.on_jump_button2_press)
 
         self.add_widget(layout)
+
+        # Initialize the timer
+        self.start_time = time.time()
+        self.timer_update(0)
+
+        # Schedule the timer update method
+        Clock.schedule_interval(self.timer_update, 1 / 60.)
+
+    def timer_update(self, dt):
+        current_time = time.time()
+        elapsed_time = current_time - self.start_time
+        minutes = int(elapsed_time // 60)
+        seconds = int(elapsed_time % 60)
+
+        self.timer_label.text = '{:02d}:{:02d}'.format(minutes, seconds)
+
 
     def on_jump_button1_press(self, instance):
         self.stickman.jump(100)
