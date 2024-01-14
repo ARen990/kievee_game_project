@@ -34,13 +34,20 @@ It is a test game that tests your concentration and the speed of your fingers. U
   ```
   ### Download the file as below.
   - folder why_R_U_running (all)
-  - folder image \n 
-    (/stickman/stickdead.png)\n
-    (/stickman/stickmob4.png)\n
-    (/stickman/stickrun1.png)\n
-    (/stickman/stickrun2.png)\n
-    (/orther/ground.png)\n
-    (/floor_ob/dio.png)\n
+  - folder image 
+
+    (/stickman/stickdead.png)
+
+    (/stickman/stickmob4.png)
+
+    (/stickman/stickrun1.png) 
+
+    (/stickman/stickrun2.png) 
+
+    (/orther/ground.png) 
+
+    (/floor_ob/dio.png)
+    
     (/music)
 
 # Thank you for watching ♥
