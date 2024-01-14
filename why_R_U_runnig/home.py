@@ -16,6 +16,7 @@ class StartScreen(Screen):
 
         # add Append button
         append_button = Button(text="Have you encountered a problem?",font_size=25, size_hint=(None, None), size=(400, 50), pos=(Window.width / 2 +100, 700), color=(1, 0, 0, 1) )
+        append_button.bind(on_press=self.switch_to_append)
         self.add_widget(append_button)
 
         # add text name game
@@ -89,3 +90,26 @@ class About(Screen):
 class Append(Screen):
     def __init__(self, **kw):
         super().__init__(**kw)
+
+        # add back button
+        back_button = Button(text="<<Back",  font_size=40, size_hint=(None, None), size=(150, 100), pos=(Window.width - 1000, 650))
+        back_button.bind(on_press=self.go_back)
+        self.add_widget(back_button)
+
+
+        append_text = Label(
+            text="[color=FF9BD2]1.If you encounter any problems \n please close and restart the game. \n 2.If you start the game and win, follow step 1.[/color]",font_size=40,pos=(0, 150),markup=True)
+        self.add_widget(append_text)
+
+        add1_text = Label(
+            text="[color=#FFFFFF]KRITTIMON[/color]",font_size=30,pos=(Window.width - 700, Window.width / 2 -600),markup=True)
+        self.add_widget(add1_text)
+
+        add2_text = Label(
+            text="[color=#FFFFFF]I apologize for the inconvenience.[/color]",font_size=30,pos=(Window.width - 800, Window.width / 2 -650),markup=True)
+        self.add_widget(add2_text)
+
+
+    def go_back(self, instance):
+        app = App.get_running_app()
+        app.root.current = 'start'
