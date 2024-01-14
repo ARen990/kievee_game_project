@@ -134,7 +134,7 @@ class GameScreen(Screen):
         self.game_won = False
 
         # Add reset button
-        reset_button = ResetButton(text="Reset", size_hint=(None, None), size=(100, 50), pos=(Window.width - 100, 700))
+        reset_button = ResetButton(text="Reset", size_hint=(None, None), size=(100, 50), pos=(Window.width - 100, 550))
         layout.add_widget(reset_button)
         reset_button.bind(on_press=self.reset_game)
 
@@ -142,6 +142,11 @@ class GameScreen(Screen):
         back_button = Button(text="<<Back", size_hint=(None, None), size=(100, 50), pos=(Window.width - 1000, 700))
         back_button.bind(on_press=self.go_back)
         self.add_widget(back_button)
+
+        # add Append button
+        append_button = Button(text="Have you encountered a problem?",font_size=25, size_hint=(None, None), size=(400, 50), pos=(Window.width / 2 +100, 700), color=(1, 0, 0, 1) )
+        append_button.bind(on_press=self.switch_to_append)
+        self.add_widget(append_button)
 
         # Add jump buttons
         jump_button1 = Button(text="Jump", size_hint=(None, None), size=(100, 50), pos=(Window.width - 100, 30))
@@ -217,6 +222,10 @@ class GameScreen(Screen):
     def go_back(self, instance):
         app = App.get_running_app()
         app.root.current = 'start'
+
+    def switch_to_append(self, instance):
+        app = app = App.get_running_app()
+        app.root.current = 'append'
 
     def reset_game(self, instance):
         # Reset the game state here

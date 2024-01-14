@@ -50,10 +50,19 @@ class About(Screen):
     def __init__(self, **kwargs):
         super(About, self).__init__(**kwargs)
 
+        # add image
+        me_image = Image(source='image/stickman/stickmob4.png', size_hint=(None, None), size=(350, 350),pos=(Window.width / 2 - 450, Window.height / 2 - 250 ))
+        self.add_widget(me_image)
+
         # add back button
         back_button = Button(text="<<Back",  font_size=40, size_hint=(None, None), size=(150, 100), pos=(Window.width - 1000, 650))
         back_button.bind(on_press=self.go_back)
         self.add_widget(back_button)
+
+        # add start button
+        start_button = Button(text="Start",font_size=50, size_hint=(None, None), size=(150, 100), pos=(Window.width - 1000, 0))
+        start_button.bind(on_press=self.start_game)
+        self.add_widget(start_button)
 
         # add text
         about_text = Label(
@@ -87,6 +96,10 @@ class About(Screen):
         app = App.get_running_app()
         app.root.current = 'start'
 
+    def start_game(self, instance):
+        app = App.get_running_app()
+        app.root.current = 'game'
+
 class Append(Screen):
     def __init__(self, **kw):
         super().__init__(**kw)
@@ -96,6 +109,10 @@ class Append(Screen):
         back_button.bind(on_press=self.go_back)
         self.add_widget(back_button)
 
+        # add start button
+        start_button = Button(text="Start",font_size=50, size_hint=(None, None), size=(150, 100), pos=(Window.width - 150, 650))
+        start_button.bind(on_press=self.start_game)
+        self.add_widget(start_button)
 
         append_text = Label(
             text="[color=FF9BD2]1.If you encounter any problems \n please close and restart the game. \n 2.If you start the game and win, follow step 1.[/color]",font_size=40,pos=(0, 150),markup=True)
@@ -116,3 +133,7 @@ class Append(Screen):
     def go_back(self, instance):
         app = App.get_running_app()
         app.root.current = 'start'
+
+    def start_game(self, instance):
+        app = App.get_running_app()
+        app.root.current = 'game'
