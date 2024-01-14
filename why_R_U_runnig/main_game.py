@@ -1,7 +1,7 @@
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager
 
-from home import StartScreen, About
+from home import StartScreen, About, Append
 from gamescreen import GameScreen
 
 class MyApp(App):
@@ -11,10 +11,12 @@ class MyApp(App):
         start_screen = StartScreen(name='start')
         about_screen = About(name='about')
         game_screen = GameScreen(name='game')
+        append_screen = Append(name='append')
         
         sm.add_widget(start_screen)
         sm.add_widget(game_screen)
         sm.add_widget(about_screen)
+        sm.add_widget(append_screen)
 
         return sm
 

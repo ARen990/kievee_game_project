@@ -14,10 +14,14 @@ class StartScreen(Screen):
         middle_image = Image(source='image/stickman/stickrun2.png', size_hint=(None, None), size=(300, 300),pos=(Window.width / 2 - 140, Window.height / 2 ))
         self.add_widget(middle_image)
 
+        # add Append button
+        append_button = Button(text="Have you encountered a problem?",font_size=25, size_hint=(None, None), size=(400, 50), pos=(Window.width / 2 +100, 700), color=(1, 0, 0, 1) )
+        self.add_widget(append_button)
+
         # add text name game
-        about_text = Label(
+        name_text = Label(
             text="[color=FF9BD2]Why Are U Running[/color]",font_size=100, size_hint=(None, None),pos=(Window.width / 2 - 50, 300),markup=True)
-        self.add_widget(about_text)
+        self.add_widget(name_text)
 
         # add start button
         start_button = Button(text="Start",font_size=50, size_hint=(None, None), size=(150, 100), pos=(Window.width / 2 - 50, 150))
@@ -36,6 +40,10 @@ class StartScreen(Screen):
     def switch_to_about(self, instance):
         app = App.get_running_app()
         app.root.current = 'about'
+
+    def switch_to_append(self, instance):
+        app = app = App.get_running_app()
+        app.root.current = 'append'
 
 class About(Screen):
     def __init__(self, **kwargs):
@@ -77,3 +85,7 @@ class About(Screen):
     def go_back(self, instance):
         app = App.get_running_app()
         app.root.current = 'start'
+
+class Append(Screen):
+    def __init__(self, **kw):
+        super().__init__(**kw)
