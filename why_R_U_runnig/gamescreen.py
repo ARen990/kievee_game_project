@@ -98,6 +98,9 @@ class Goal(Image):
         self.size_hint = (None, None)
         self.size = (100, 100)  # Adjust the size as needed
 
+class ResetButton(Button):
+    pass  # This is a placeholder for future customizations
+
 class GameScreen(Screen):
     def __init__(self, **kwargs):
         super(GameScreen, self).__init__(**kwargs)
@@ -124,6 +127,12 @@ class GameScreen(Screen):
         # Add a timer label
         self.timer_label = Label(text='0:00', font_size='50sp', color=(0, 0, 0, 1), pos=(Window.width - 200, 600))
         layout.add_widget(self.timer_label)
+
+        # Add reset button
+        reset_button = ResetButton(text="Reset", size_hint=(None, None), size=(100, 50), pos=(Window.width - 100, 700))
+        layout.add_widget(reset_button)
+        reset_button.bind(on_press=self.reset_game)
+
 
         # add back button
         back_button = Button(text="<<Back", size_hint=(None, None), size=(100, 50), pos=(Window.width - 1000, 700))
@@ -166,6 +175,13 @@ class GameScreen(Screen):
     def go_back(self, instance):
         app = App.get_running_app()
         app.root.current = 'start'
+
+    def reset_game(self, instance):
+        # Reset the game state here
+        self.start_time = time.time()
+        self.elapsed_time = 0
+        self.stickman.pos = (0, 0)
+        self.place_goal_randomly()
 
     def place_goal_randomly(self):
         # Place the goal at a random position within the window
